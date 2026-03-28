@@ -1,0 +1,34 @@
+{
+  "name": "CV Maker — سيرتك الذاتية",
+  "short_name": "CV Maker",
+  "description": "أنشئ سيرتك الذاتية الاحترافية بسهولة وسرعة",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d0d1a",
+  "theme_color": "#1a1a2e",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "إنشاء سيرة جديدة",
+      "url": "/",
+      "description": "ابدأ سيرة ذاتية جديدة"
+    }
+  ]
+}
