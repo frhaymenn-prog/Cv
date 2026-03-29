@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#1a1a2e"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-title" content="CV Maker"/>
+  <title>CV Maker</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="icons/icon-192.png"/>
+  <link rel="apple-touch-icon" href="icons/icon-192.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+  SCREEN A: HOME
+═══════════════════════════════ -->
+<div id="s-home" class="screen active">
+  <div class="bg-orbs">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+  </div>
+  <div class="home-wrap">
+    <div class="home-logo"><span class="star-spin">✦</span> CV <em>Maker</em></div>
+    <div class="home-title">مرحباً بك 👋</div>
+    <div class="home-sub">أنشئ سيرتك الذاتية الاحترافية<br>في دقائق معدودة</div>
+    <button class="btn-create" id="btn-new">
+      <span class="star-spin">✦</span> إنشاء سيرة ذاتية جديدة <span>←</span>
+    </button>
+    <button class="btn-saved" id="btn-list">
+      📋 سيري الذاتية المحفوظة
+      <span class="badge" id="badge" style="display:none">0</span>
+    </button>
+    <p class="home-note">🔒 بياناتك محفوظة على جهازك فقط</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+  SCREEN B: SAVED LIST
+═══════════════════════════════ -->
+<div id="s-list" class="screen">
+  <div class="topbar">
+    <button class="back-btn" id="list-back">→</button>
+    <span>سيري الذاتية المحفوظة</span>
+    <div style="width:36px"></div>
+  </div>
+  <div class="scroll-area" id="saved-list-wrap"></div>
+</div>
+
+<!-- ═══════════════════════════════
+  SCREEN C: FORM (5 steps)
+═══════════════════════════════ -->
+<div id="s-form" class="screen">
+  <div class="topbar">
+    <button class="back-btn" id="form-back">→</button>
+    <span id="step-title">المعلومات الشخصية</span>
+    <span class="step-pill"><b id="step-num">1</b>/5</span>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+
+  <!-- ── STEP 1: Personal Info ── -->
+  <div class="step-panel" id="sp1">
+    <div class="scroll-area">
+      <div class="photo-zone" id="photo-zone">
+        <img id="photo-img" src="" alt=""/>
+        <div id="photo-hint"><span>📷</span><small>اضغط لإضافة صورة</small></div>
+        <input type="file" id="photo-file" accept="image/*" hidden/>
+      </div>
+
+      <div class="field">
+        <label>الاسم الكامل <span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="محمد أحمد العلي"/>
+      </div>
+      <div class="field">
+        <label>المسمى الوظيفي</label>
+        <input type="text" id="f-job" placeholder="مطوّر ويب · محاسب · مدير مشاريع"/>
+      </div>
+      <div class="field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="f-email" placeholder="example@email.com"/>
+      </div>
+      <div class="field">
+        <label>رقم الهاتف</label>
+        <input type="tel" id="f-phone" placeholder="06XXXXXXXX" maxlength="15"/>
+        <small class="hint">يقبل: 05 · 06 · 07 · 037</small>
+        <span class="err" id="phone-err"></span>
+      </div>
+      <div class="field">
+        <label>المدينة / الدولة</label>
+        <input type="text" id="f-loc" placeholder="الرياض، المملكة العربية السعودية"/>
+      </div>
+      <div class="field">
+        <label>لينكد إن</label>
+        <input type="text" id="f-linkedin" placeholder="linkedin.com/in/username"/>
+      </div>
+      <div class="field">
+        <label>الموقع الشخصي</label>
+        <input type="text" id="f-web" placeholder="www.mysite.com"/>
+      </div>
+      <div class="field">
+        <label>نبذة مختصرة</label>
+        <textarea id="f-summary" rows="3" placeholder="اكتب نبذة احترافية عن نفسك..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: Experience ── -->
+  <div class="step-panel hidden" id="sp2">
+    <div class="scroll-area">
+      <p class="step-note">💼 أضف خبراتك العملية — يمكنك التخطي</p>
+      <div id="exp-list"></div>
+      <button class="btn-add" id="add-exp">＋ إضافة خبرة عملية</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: Education ── -->
+  <div class="step-panel hidden" id="sp3">
+    <div class="scroll-area">
+      <p class="step-note">🎓 أضف مؤهلاتك التعليمية — يمكنك التخطي</p>
+      <div id="edu-list"></div>
+      <button class="btn-add" id="add-edu">＋ إضافة مؤهل تعليمي</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 4: Skills ── -->
+  <div class="step-panel hidden" id="sp4">
+    <div class="scroll-area">
+      <div class="field">
+        <label>🔧 المهارات التقنية</label>
+        <input type="text" id="f-tech" placeholder="JavaScript, Python, Figma, Excel..."/>
+        <small class="hint">افصل بين كل مهارة بفاصلة ,</small>
+      </div>
+      <div class="field">
+        <label>🤝 المهارات الشخصية</label>
+        <input type="text" id="f-soft" placeholder="القيادة, العمل الجماعي, حل المشكلات..."/>
+        <small class="hint">افصل بين كل مهارة بفاصلة ,</small>
+      </div>
+      <div class="field">
+        <label>🌍 اللغات</label>
+        <input type="text" id="f-langs" placeholder="العربية (اللغة الأم), الإنجليزية (متقدم)..."/>
+        <small class="hint">افصل بفاصلة ,</small>
+      </div>
+      <div class="field">
+        <label>🏆 الشهادات والجوائز</label>
+        <textarea id="f-certs" rows="3" placeholder="AWS Certified Developer&#10;جائزة أفضل موظف 2023"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 5: Design + Save ── -->
+  <div class="step-panel hidden" id="sp5">
+    <div class="scroll-area">
+      <div class="field">
+        <label>🎨 لون السيرة الذاتية</label>
+        <div class="swatches" id="swatches">
+          <div class="sw active" data-c="#1a1a2e" style="background:#1a1a2e" title="نيفي كلاسيك"></div>
+          <div class="sw" data-c="#1b4332" style="background:#1b4332" title="أخضر عريق"></div>
+          <div class="sw" data-c="#7b2d8b" style="background:#7b2d8b" title="بنفسجي ملكي"></div>
+          <div class="sw" data-c="#8b1a1a" style="background:#8b1a1a" title="أحمر أنيق"></div>
+          <div class="sw" data-c="#1a3a5c" style="background:#1a3a5c" title="أزرق صافٍ"></div>
+          <div class="sw" data-c="#3d2b00" style="background:#3d2b00" title="بني ذهبي"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>📄 قالب السيرة</label>
+        <div class="tmpl-row">
+          <div class="tmpl active" data-t="classic">
+            <div class="tmpl-prev tp-classic"></div><span>كلاسيك</span>
+          </div>
+          <div class="tmpl" data-t="modern">
+            <div class="tmpl-prev tp-modern"></div><span>عصري</span>
+          </div>
+          <div class="tmpl" data-t="sidebar">
+            <div class="tmpl-prev tp-sidebar"></div><span>جانبي</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SAVE BOX -->
+      <div class="save-box">
+        <div class="save-check">✅</div>
+        <p class="save-label">سيرتك جاهزة للحفظ!</p>
+        <button class="btn-pdf" id="btn-save">
+          <span>💾</span> حفظ وتحميل PDF
+        </button>
+        <button class="btn-peek" id="btn-peek">
+          👁 معاينة السيرة أولاً
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bot-nav" id="bot-nav">
+    <button class="nav-prev" id="nav-prev">→ السابق</button>
+    <button class="nav-next" id="nav-next">التالي ←</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+  SCREEN D: PREVIEW
+═══════════════════════════════ -->
+<div id="s-preview" class="screen">
+  <div class="topbar">
+    <button class="back-btn" id="preview-back">→</button>
+    <span>معاينة السيرة</span>
+    <button class="btn-gold-sm" id="preview-dl">⬇ PDF</button>
+  </div>
+  <div class="scroll-area preview-bg">
+    <div class="cv-paper" id="cv-paper"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator)
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
